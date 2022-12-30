@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "dist-types",
+    "rootDir": "src"
+  },
+  "include": [
+    "src/"
+  ]
+}

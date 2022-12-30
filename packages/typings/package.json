@@ -1,0 +1,28 @@
+{
+  "name": "@athlon1600/chat-typings",
+  "version": "0.0.12",
+  "description": "interfaces that provide typings and do not depend on any packages",
+  "main": "./dist-cjs/index.js",
+  "module": "./dist-cjs/index.js",
+  "types": "./dist-types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/athlon1600/chat",
+    "directory": "packages/typings"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -w",
+    "clean": "rimraf ./dist*",
+    "prepublish": "tsc"
+  },
+  "files": [
+    "dist-*/"
+  ],
+  "keywords": [],
+  "author": "Athlon1600",
+  "license": "MIT",
+  "dependencies": {
+    "rimraf": "^3.0.2"
+  }
+}

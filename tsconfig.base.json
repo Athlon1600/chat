@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "incremental": false,
+    "strict": true,
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "node_modules/"
+  ]
+}
