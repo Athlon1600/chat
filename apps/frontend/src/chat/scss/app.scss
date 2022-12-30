@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+button {
+  @apply px-5 py-3;
+  @apply font-bold;
+
+  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+
+}
+
+* {
+  font-family: monospace;
+}
+
+h1 {
+  @apply text-2xl;
+}
+
+h2 {
+  @apply text-xl;
+}
+
+.roboto {
+  font-family: "Roboto", serif;
+}
+
+.interim {
+  font-family: "Inter", serif;
+}
+
+.error {
+  background-color: rgba(185, 28, 28);
+  color: rgba(255, 255, 255);
+}

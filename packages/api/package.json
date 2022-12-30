@@ -31,7 +31,6 @@
   "dependencies": {
     "axios": "^1.2.1",
     "socket.io-client": "^4.5.4",
-    "typings": "*",
     "webpack": "^5.75.0"
   },
   "devDependencies": {

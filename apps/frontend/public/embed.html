@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <style>
+        #app {
+            height: 100vh;
+        }
+
+        html, body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script src="/assets/embed.js"></script>
+
+<script>
+
+    /** @type {IEmbed} */
+    const embed = $embed;
+
+    let queryParams = (new URL(document.location)).searchParams;
+    const room = queryParams.get('room');
+    const sid = queryParams.get('sid');
+
+    // TODO: make this work purely through Storage
+    window.addEventListener("message", (event) => {
+
+        // TODO: just remount entire application
+
+        if (typeof event.data === 'object') {
+            const data = event.data;
+
+            if ('login' in data) {
+                embed.api.rest.setAuthToken(data.login);
+                embed.api.socket.loginUsingToken(data.login);
+            }
+
+            if ('room' in data) {
+                embed.api.socket.joinRoom(data.room);
+            }
+        }
+
+    });
+
+    const token = localStorage.getItem('chat_token');
+
+    addEventListener('storage', (/** @type {StorageEvent} */ event) => {
+
+        // login from outside
+        if (event.key === 'chat_token') {
+            embed.api.socket.loginUsingToken(event.newValue);
+        }
+
+    });
+
+    embed.init('#app', {
+        login: token,
+        room: room
+    }, () => {
+        // console.log('Chat window loaded!');
+    });
+
+</script>
+
+</body>
+</html>
