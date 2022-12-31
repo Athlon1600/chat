@@ -36,7 +36,7 @@ which has many advantages during development.
 
 Two things you need installed first:
 
-- Node.js - https://nodejs.org/
+- Node.js (>=16) - https://nodejs.org/
 - Docker - https://www.docker.com/products/docker-desktop/
 
 Now run these commands:

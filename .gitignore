@@ -1,0 +1,13 @@
+.idea
+.DS_Store
+node_modules
+frontend/dist
+auth_server/dist
+sdk/dist
+sdk/node_modules
+/dist-*
+dist
+dist-*
+
+docker/**/data/*
+docker/redisinsight
