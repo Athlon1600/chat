@@ -1,5 +1,5 @@
 import {io, Socket} from "socket.io-client";
-import {ClientToServerEvents, ServerToClientEvents} from "typings";
+import {ClientToServerEvents, ServerToClientEvents} from "@athlon1600/chat-typings";
 
 const dateString = () => {
     return (new Date()).toLocaleString();
