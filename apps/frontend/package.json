@@ -33,11 +33,12 @@
     "vue-loader": "^16.2.0"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.6",
     "@athlon1600/chat-sdk-js": "*",
+    "@popperjs/core": "^2.11.6",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
     "vue": "^3.2.37"
   }
 }

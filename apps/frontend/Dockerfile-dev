@@ -12,11 +12,16 @@ COPY apps/frontend/package.json apps/frontend/package.json
 ## internal packages we need during installation
 COPY packages ./packages
 
+ENV NODE_ENV=development
+
 # install project dependencies
 RUN npm install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
+
+# generate /dist for each workspace
+RUN npm run build:packages
 
 EXPOSE 8082
 

@@ -8,19 +8,18 @@ COPY ["package.json", "package-lock.json*", "./"]
 COPY apps/server/package.json ./apps/server/package.json
 COPY tsconfig* ./
 
-# Internal packages we need access to during installation
 COPY packages ./packages
 
 ENV NODE_ENV=development
 
-## install dependencies
+# install dependencies
 RUN npm install
 
-#RUN npm install -g nodemon
-#RUN npm install typescript -g
-#RUN npm install ts-node-dev -g
-
+# TODO: breaks cache anytime changes detected
 COPY . .
+
+# generate /dist for each workspace
+RUN npm run build:packages
 
 # Build the project
 RUN npm run build --workspace server

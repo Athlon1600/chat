@@ -13,9 +13,7 @@
     "seed": "",
     "seed:db": "",
     "start:dev": "npm run serve",
-    "dev": "concurrently -k \"npm run watch\" \"npm run serve\"",
-    "ts:dev": "ts-node-dev --poll --respawn --pretty --transpile-only src/index.ts",
-    "ts:socket": "ts-node-dev --poll --respawn --pretty --transpile-only src/websocket/index.ts"
+    "dev": "concurrently -k \"npm run watch\" \"npm run serve\""
   },
   "author": "",
   "license": "ISC",
