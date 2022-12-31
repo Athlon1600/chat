@@ -1,7 +1,6 @@
 import {OkPacket} from "mysql";
 import {EntityModel} from "../../models/EntityModel";
 import {Nullable} from "../../types";
-import {BaseModel} from "../BaseModel";
 
 export class QueryResult {
 

@@ -28,10 +28,8 @@ services:
     container_name: 'redis'
     image: redis
     restart: always
-    #    volumes:
-    #      - ./docker/redis/data:/data
-    #      - ./docker/redis/redis.conf:/etc/redis.conf
-    #    command: redis-server /etc/redis.conf
+    volumes:
+      - ./docker/redis/data:/data
     ports:
       - "6379:6379"
 
