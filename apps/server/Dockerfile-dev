@@ -4,8 +4,9 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-# Copy server package.json
+# Things we need during installation and build steps
 COPY apps/server/package.json ./apps/server/package.json
+COPY tsconfig* ./
 
 # Internal packages we need access to during installation
 COPY packages ./packages

@@ -23,7 +23,7 @@
     "build:bundle": "webpack --mode development",
     "build:docs": "typedoc --tsconfig tsconfig.cjs.json src/index.ts",
     "clean": "rimraf ./dist* && rimraf ./node_modules",
-    "__prepublish": "npm run clean && npm run build"
+    "prepare": "npm run clean && npm run build"
   },
   "keywords": [],
   "author": "Athlon1600",

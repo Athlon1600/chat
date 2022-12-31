@@ -11,10 +11,10 @@
     "directory": "packages/typings"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p ./tsconfig.json",
     "watch": "tsc -w",
     "clean": "rimraf ./dist*",
-    "prepublish": "tsc"
+    "prepare": "npm run build"
   },
   "files": [
     "dist-*/"

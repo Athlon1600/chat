@@ -1,0 +1,9 @@
+# TODO: ignore everything and whitelist things we want one by one instead
+
+# All node_modules directories
+node_modules
+**/node_modules
+
+# all build related outputs specific to your local system maybe
+dist*
+**/dist*
