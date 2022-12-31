@@ -1,0 +1,12 @@
+{
+  "signal": "SIGHUP",
+  "watch": [
+    "dist"
+  ],
+  "ext": "js",
+  "legacyWatch": true,
+  "delay": 1200,
+  "ignore": [
+    "node_modules"
+  ]
+}

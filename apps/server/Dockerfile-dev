@@ -1,0 +1,30 @@
+FROM node:lts-alpine
+
+WORKDIR /app
+
+COPY ["package.json", "package-lock.json*", "./"]
+
+# Copy server package.json
+COPY apps/server/package.json ./apps/server/package.json
+
+# Internal packages we need access to during installation
+COPY packages ./packages
+
+ENV NODE_ENV=development
+
+## install dependencies
+RUN npm install
+
+#RUN npm install -g nodemon
+#RUN npm install typescript -g
+#RUN npm install ts-node-dev -g
+
+COPY . .
+
+# Build the project
+RUN npm run build --workspace server
+
+EXPOSE 3000
+
+CMD npm run dev --workspace server
+# CMD sleep 999999
