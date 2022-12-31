@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+
+  backend:
+    container_name: "backend"
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile-dev
+    volumes:
+      - ./apps/server/src:/app/apps/server/src
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      #- DATABASE_URL=mysql://root:password@db:3306/chat?charset=UTF-8
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=password
+      - DB_NAME=chat
+    ports:
+      - '3000:3000'
+
+  web:
+    container_name: "web"
+    build:
+      context: .
+      dockerfile: ./apps/frontend/Dockerfile-dev
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - APP_URL=http://localhost:8080
+      - BACKEND_URL=http://localhost:3000
+      #- WEBSOCKET_URL=
+
+    # Inside Docker, these folders will be watched and recompiled if any changes detected
+    volumes:
+      - ./apps/frontend/src:/app/apps/frontend/src
+      - ./apps/frontend/public:/app/apps/frontend/public
+    ports:
+      - '8080:8080'
+
+#  nginx:
+#    container_name: "nginx"
+#    image: nginx
+#    environment:
+#      - NGINX_HOST=foobar.com
+#      - NGINX_PORT=80
+#    volumes:
+#      - ./docker/nginx_dev.conf:/etc/nginx/nginx.conf
+#    ports:
+#      - "8090:80"

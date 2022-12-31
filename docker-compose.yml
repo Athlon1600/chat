@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+
+  database:
+    container_name: db
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      #- MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - "${MYSQL_PORT:-3306}"
+
+  adminer:
+    image: adminer
+    restart: always
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+      - ADMINER_DESIGN='nette'
+    ports:
+      - "9000:8080"
+
+  redis:
+    container_name: 'redis'
+    image: redis
+    restart: always
+    #    volumes:
+    #      - ./docker/redis/data:/data
+    #      - ./docker/redis/redis.conf:/etc/redis.conf
+    #    command: redis-server /etc/redis.conf
+    ports:
+      - "6379:6379"
+
+  redis_insight:
+    image: redislabs/redisinsight:latest
+    environment:
+      - RITRUSTEDORIGINS=http://localhost:8090
+    volumes:
+      - ./docker/redisinsight:/db
+    ports:
+      - "8001:8001"
+
+  hoppscotch:
+    container_name: hoppscotch
+    image: hoppscotch/hoppscotch:latest
+    restart: always
+    ports:
+      - "3009:3000"

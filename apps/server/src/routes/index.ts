@@ -3,7 +3,6 @@ import {rooms} from "./rooms";
 import {messages} from "./messages";
 import {Request, Response, Router} from "express";
 import {connections} from "./connections";
-import {ConfigController} from "../http/controllers/ConfigController";
 import {RequiresAuthenticationMiddleware} from "../http/RequiresAuthenticationMiddleware";
 import {BanController} from "../http/controllers/BanController";
 import {HomeController} from "../http/controllers/HomeController";
