@@ -1,0 +1,40 @@
+{
+  "name": "chat",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A complete chat application built with TypeScript with Vue frontend",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "build:packages": "npm run build -w typings -w api",
+    "clean": "rimraf ./node_modules",
+    "clean:packages": "npm run clean --workspaces",
+    "docker:services": "cross-env MYSQL_PORT=3309:3306 docker-compose -f docker-compose.yml up --build -d",
+    "docker:dev": "cross-env MYSQL_PORT=3309:3306 docker-compose -f docker-compose.yml -f docker-compose-dev.yml -p chat_dev up --build -d",
+    "docker:production": "cross-env COMPOSE_PROJECT_NAME=chat_prod docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d",
+    "down": "docker-compose -p chat_dev down --remove-orphans",
+    "down:prod": "docker compose -p chat_prod down --remove-orphans",
+    "docker:redis:clear": "docker exec -it redis redis-cli flushall",
+    "watch:packages": "concurrently \"npm run watch -w typings\" \"npm run watch -w api\" "
+  },
+  "keywords": [
+    "chat",
+    "typescript",
+    "vue"
+  ],
+  "author": "Athlon1600",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "typescript": "^4.9.4",
+    "@athlon1600/chat-sdk-js": "*",
+    "@athlon1600/chat-typings": "*"
+  }
+}
