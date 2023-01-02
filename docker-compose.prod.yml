@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+
+  backend:
+    container_name: "backend"
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile-dev
+    environment:
+      - NODE_ENV=production
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    expose:
+      - 3000
+
+  frontend:
+    container_name: "web"
+    build:
+      context: .
+      dockerfile: ./apps/frontend/Dockerfile-dev
+    environment:
+      - NODE_ENV=production
+      - PORT=8082
+    expose:
+      - 8082
+
+  caddy:
+    image: caddy:2.6
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+    environment:
+      - DOMAIN=chat-backend.streamplanet.tv

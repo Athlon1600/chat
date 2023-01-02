@@ -23,7 +23,7 @@ export class QueryResult {
 
     getFirstRowValue(name: string) {
 
-        if (this.getRows()) {
+        if (this.getRows().length > 0) {
             const firstRow: { [key: string]: any } = this.rows[0];
 
             return firstRow.hasOwnProperty(name) ? firstRow[name] : null;

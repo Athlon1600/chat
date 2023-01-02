@@ -65,6 +65,12 @@ export class UserAuthController {
                     user: UserResource.make(user).toArray(),
                     token: user.auth_token
                 });
+
+            } else {
+
+                return res.json({
+                    error: 'Invalid credentials'
+                });
             }
 
         } else if (guest) {
