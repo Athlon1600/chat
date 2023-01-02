@@ -1,5 +1,6 @@
 # Chat Application
 
+![GitHub last commit](https://img.shields.io/github/last-commit/athlon1600/chat)
 ![Top language](https://img.shields.io/github/languages/top/athlon1600/chat)
 ![Lines of code](https://img.shields.io/tokei/lines/github/athlon1600/chat)
 
@@ -12,7 +13,13 @@ away from Twitch infrastructure and moderation.
 
 ## Live demo
 
-coming soon...
+- https://chat-athlon1600.netlify.app/
+
+Playground for developers showing things you can do using HTTP/Websocket API.
+
+- https://chat-athlon1600.netlify.app/lofi.html
+
+A more real-world example showing chat embedded alongside a live stream.
 
 ## :warning: Work in progress...
 
