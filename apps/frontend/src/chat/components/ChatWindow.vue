@@ -4,15 +4,15 @@
     <div class="header">
 
       <div class="text-left p-2">
-        <h1>{{ roomName }} <small>{{ roomData ? `(${roomData.uid})` : '' }}</small></h1>
+        <h1>{{ roomName.length ? roomName : "..." }} <small>{{ roomData ? `(${roomData.uid})` : '' }}</small></h1>
 
-        <div class="mt-3">{{ roomData ? roomData.description : "..." }}</div>
+        <div v-if="roomDescription" class="mt-3">{{ roomDescription }}</div>
 
       </div>
     </div>
 
     <div v-if="notInRoom" class="flex-grow p-5">
-      <h2 class="interim">You are not in any room at this moment</h2>
+      <h3 class="interim">You are not in any room at this moment</h3>
     </div>
 
     <messages v-else :messages="messages" class="flex-grow overscroll-contain"></messages>
@@ -65,7 +65,10 @@ export default defineComponent({
       return this.$store.state.currentUser;
     },
     roomName(): string {
-      return this.roomData ? this.roomData.name : "Room Name";
+      return this.roomData ? this.roomData.name : "";
+    },
+    roomDescription(): string {
+      return this.roomData?.description || "";
     },
     usersOnline(): string {
       return "N/A";

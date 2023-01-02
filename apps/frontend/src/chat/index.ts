@@ -9,19 +9,15 @@ import {APP_CONFIG} from "./config";
 const BACKEND_URI = APP_CONFIG.BACKEND_URL;
 const SOCKET_URI = APP_CONFIG.WEBSOCKET_URL;
 
+// TODO: expose RestClient instead and get websocketUrl from /api/websocket
+const rest = new RestClient({
+    endpoint: BACKEND_URI
+});
+
 const createSdk = function (element: Element, options: { login: string, room: string }, callback: any) {
 
-    // TODO: expose RestClient instead and get websocketUrl from /api/websocket
-    const rest = new RestClient({
-        endpoint: BACKEND_URI
-    });
-
     const socketClient = new SocketClient(SOCKET_URI);
-
-    embed.api = {
-        rest: rest,
-        socket: socketClient
-    };
+    embed.api.socket = socketClient;
 
     if (options.login) {
         rest.setAuthToken(options.login);
@@ -49,20 +45,30 @@ interface IEmbed {
     init: any,
     _vm: any,
     api: {
-        rest: RestClient,
-        socket: SocketClient
-    } | null,
+        rest?: RestClient,
+        socket?: SocketClient
+    },
     util: any
+}
+
+function getQueryParam(name: string): string {
+    const params: URLSearchParams = (new URL(document.location.toString())).searchParams;
+    return params.get(name) || "";
+}
+
+function getHashParam(name: string): string {
+    return "";
 }
 
 const embed: IEmbed = {
     init: createSdk,
     _vm: null,
-    api: null,
+    api: {
+        rest: rest
+    },
     util: {
-        getQueryParam() {
-
-        }
+        getQueryParam,
+        getHashParam
     }
 }
 

@@ -27,6 +27,7 @@
     let queryParams = (new URL(document.location)).searchParams;
     const room = queryParams.get('room');
     const sid = queryParams.get('sid');
+    const guest = queryParams.get('guest');
 
     // TODO: make this work purely through Storage
     window.addEventListener("message", (event) => {
@@ -48,8 +49,6 @@
 
     });
 
-    const token = localStorage.getItem('chat_token');
-
     addEventListener('storage', (/** @type {StorageEvent} */ event) => {
 
         // login from outside
@@ -59,12 +58,38 @@
 
     });
 
-    embed.init('#app', {
-        login: token,
-        room: room
-    }, () => {
-        // console.log('Chat window loaded!');
-    });
+    (() => {
+
+        let token = localStorage.getItem('chat_token');
+
+        function init() {
+
+            embed.init('#app', {
+                login: token,
+                room: room
+            }, () => {
+                // console.log('Chat window loaded!');
+            });
+        }
+
+        if (guest) {
+
+            embed.api.rest.loginGuest().then((data) => {
+
+                if ('token' in data) {
+                    token = data.token;
+                }
+
+            }).finally(() => {
+                init();
+            });
+
+        } else {
+            init();
+        }
+
+    })();
+
 
 </script>
 
