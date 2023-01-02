@@ -18,18 +18,18 @@ export class UserAuthController {
 
         if (count === 0) {
 
-            if (data.username !== 'root' || !data.password) {
+            if (data.username !== 'root') {
                 throw new UnauthorizedException("Cannot create new users until ROOT user has been created first");
             }
-        }
 
-        if (!data.username || !validateUsername(data.username)) {
+        } else if (!data.username || !validateUsername(data.username)) {
 
             return res.json({
                 error: 'Invalid username'
             });
+        }
 
-        } else if (!data.password || !validatePassword(data.password)) {
+        if (!data.password || !validatePassword(data.password)) {
 
             return res.json({
                 error: 'Invalid password'
