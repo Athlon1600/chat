@@ -21,6 +21,8 @@ Playground for developers showing things you can do using HTTP/Websocket API.
 
 A more real-world example showing chat embedded alongside a live stream.
 
+![Imgur](https://i.imgur.com/8unZ1yl.png)
+
 ## :warning: Work in progress...
 
 This project is still in its beta stage. Nothing is guaranteed until v1.0.0.

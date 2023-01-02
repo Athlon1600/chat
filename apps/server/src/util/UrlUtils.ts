@@ -1,3 +1,5 @@
+import {Nullable} from "../types";
+
 export class UrlUtils {
 
     public static trimSlashStart(str: string) {
@@ -24,5 +26,16 @@ export class UrlUtils {
     static build(host: string, path: string) {
         host = this.addHttp(host);
         return this.trimSlash(host) + '/' + this.trimSlashStart(path);
+    }
+
+    static parseUrlOrNull(url: string): Nullable<URL> {
+
+        try {
+            return new URL(url);
+        } catch (e) {
+
+        }
+
+        return null;
     }
 }
