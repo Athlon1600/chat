@@ -10,10 +10,14 @@ export class InternetUtils {
         const rootDir = path.resolve('./');
         const databasePath = path.join(rootDir, '/resources/GeoLite2-City.mmdb');
 
-        // TODO: handle not found
-        const lookup = await maxmind.open<CityResponse>(databasePath);
+        let response: Nullable<CityResponse> = null;
 
-        const response: Nullable<CityResponse> = lookup.get(ip);
+        try {
+            const lookup = await maxmind.open<CityResponse>(databasePath);
+            response = lookup.get(ip);
+        } catch (e) {
+            // do nothing
+        }
 
         if (response === null) {
             return null;

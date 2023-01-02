@@ -16,7 +16,7 @@ const safeRouter = new SafeRouter();
 rootRouter.get('/', HomeController.index);
 rootRouter.get('/health', HomeController.health);
 rootRouter.get('/random', HomeController.random);
-rootRouter.get('/geoip2', HomeController.geoip2);
+rootRouter.get('/geoip2', SafeRouter.safeHandler(HomeController.geoip2));
 
 safeRouter.get('/websocket', WebsocketController.open);
 
