@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat API Playground</title>
+
+    <style>
+
+        html, body {
+            margin: 0;
+        }
+
+        hr {
+            margin: 3em 0;
+        }
+
+        .left {
+            display: flex;
+            min-width: 850px;
+        }
+
+        .left-sticky {
+            display: flex;
+            position: fixed;
+            top: 0;
+            min-width: 850px;
+        }
+
+        .left-sticky iframe {
+            flex-grow: 1;
+            min-height: 700px;
+
+            width: 100%;
+            height: 100%;
+        }
+
+        .right {
+            flex-grow: 1;
+            width: 1px;
+        }
+
+        pre {
+            padding: 1rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: rgba(0, 0, 0, .03125);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div style="display: flex">
+
+    <div class="left">
+
+        <div class="left-sticky" style="flex-direction: column">
+
+            <div style="margin: 1em; display: flex; align-items: center">
+                <input type="text" value="" id="txt_embed_code" style="flex-grow: 1">
+                <small style="margin-left: 0.5em;">2x</small>
+            </div>
+
+            <div style="display: flex; width:100%;">
+                <iframe src="embed.html" name="frame_left"
+                        onLoad="onFrameLoad(this.contentWindow.location);"></iframe>
+                <iframe src="embed.html" name="frame_right"></iframe>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="right">
+
+        <div style="padding: 1em">
+
+            <h1>Chat API Playground</h1>
+
+            <p>
+                <a href="https://github.com/Athlon1600/chat" target="_blank">https://github.com/Athlon1600/chat</a>
+            </p>
+
+            <p>If this is your first time viewing this page,
+                the chat on the left will not work until you join some <strong>room</strong>
+                and <strong>login</strong> as either a registered user or a guest user.</p>
+
+            <p>Sections below will show how to do all of those, and show exact request/response that go with each API
+                call. For even more details, just look at the source code of this page or inspect the Network
+                console on your browser.
+            </p>
+
+
+            <p>
+                This frontend part of the application is completely <strong>serverless</strong>,
+                and can be deployed to run at scale
+                at any of the many FREE CDN providers out there.</p>
+
+            <p>The actual <strong>backend</strong> server where all the real expensive computing is happening is
+                located at:
+                <br>
+
+                <a id="hostname_link" href="#" target="_blank">
+                    <span class="hostname"></span>
+                </a>
+            </p>
+
+            <button onclick="resetPlayground()">Reset playground</button>
+
+            <hr>
+
+            <h2>Registration (optional)</h2>
+
+            <p>Most API calls (such as ones involving posting messages, creating rooms, etc)
+
+                requires you to authenticate using <strong>authentication token</strong>
+                which is associated with your user account.</p>
+
+            <p>So the first step is to create your own user account:</p>
+
+            <pre>POST <span class="hostname"></span>/users/register [username=???, password=???]</pre>
+
+            <fieldset>
+                <legend>Register</legend>
+                <label for="register_username">Username: </label>
+                <input type="text" id="register_username" value="" data-saved="1"/>
+                <br><br>
+                <label for="register_password">Password: </label>
+                <input type="password" id="register_password" value=""/>
+                <br><br>
+                <button type="button" onclick="registerClicked()">Register</button>
+            </fieldset>
+
+            <pre id="register_response"></pre>
+
+            <hr>
+
+            <h2>Login</h2>
+
+            <p>Once your account was created successfully, you can then use those credentials to login
+                and retrieve your personal <strong>authentication token</strong> which is required
+                in most other API calls.
+            </p>
+
+            <p>
+                Or you may choose to skip registration step entirely, and login as a guest instantly
+                which works by automatically creating a user from your <strong>IP address</strong>
+            </p>
+
+            <pre>POST <span class="hostname"></span>/users/login [username=???, password=???, guest=???]</pre>
+
+            <fieldset>
+                <legend>Login</legend>
+                <label for="login_username">Username:</label>
+                <input type="text" id="login_username">
+                <br><br>
+                <label for="login_password">Password:</label>
+                <input type="text" id="login_password">
+                <br><br>
+                <button onclick="loginClicked(false)">Login</button>
+                &nbsp;
+                <button onclick="loginClicked(true)">Login as Guest</button>
+            </fieldset>
+
+            <pre id="login_response"></pre>
+
+            <p>Once you have your <strong>token</strong>,
+                you can then login to the chat immediately from any page on your site (as long as it's hosted on the
+                same domain) using Storage API:</p>
+
+            <pre>window.localStorage.setItem('chat_token') = ???</pre>
+
+            <input type="text" id="chat_auth" value="" size="80"
+                   placeholder="looks something like - e1377b5fdcd487722990511f26e3011f">
+            <br>
+            <button onclick="updateAuth()">Submit</button>
+
+            <hr>
+
+            <h2>Rooms</h2>
+
+            <p>All conversations take place in <strong>rooms</strong>. You can create a new room easily,
+                but you must be authenticated with the API first.</p>
+
+            <p>When you create a room, you then become the <strong>owner</strong>
+
+                of that room which grants you special privileges like deleting messages and banning people.</p>
+
+            <p>Example request:</p>
+
+            <pre>Authorization: Bearer &lt;token&gt;
+POST <span class="hostname"></span>/rooms [name=???]</pre>
+
+            <fieldset>
+                <legend>New Room</legend>
+                <label for="rooms_auth">Auth Token:</label>
+                <input type="text" id="rooms_auth" size="50">
+                <br><br>
+                <label for="room_name">Room Name:</label>
+                <input type="text" id="room_name">
+                <br><br>
+                <button onclick="createRoomClicked()">Create Room</button>
+            </fieldset>
+
+            <pre id="rooms_response"></pre>
+
+            <p>All rooms are uniquely identified by their <strong>uid</strong>.</p>
+
+            <p>When embedding chat application on your site, the <strong>embed.html</strong>
+                file accepts <code>?room=</code> parameter which tells it to join that room automatically.</p>
+
+            <pre>Example: /embed.html?room=XPeDGLvd6D</pre>
+
+            <fieldset>
+                <legend>/embed.html?room={room.uid}</legend>
+                <label for="embed_room_uid">{room.uid}:</label>
+                <input type="text" id="embed_room_uid" value="" placeholder="ex. XPeDGLvd6D">
+                <br><br>
+                <button onclick="loadRoomChat()">Reload /embed.html</button>
+            </fieldset>
+
+            <hr>
+
+            <h2>Messaging</h2>
+
+            <p>Chat messages are typically sent/received via <strong>Websocket</strong> protocol,
+                but it is possible to do the same using our HTTP REST API too:</p>
+
+            <pre>POST <span class="hostname"></span>/messages [message="hello from HTTP!"]</pre>
+
+            <p>You may also delete messages:</p>
+
+            <pre>DELETE <span class="hostname"></span>/messages/{message.id}</pre>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="/assets/sdk.js"></script>
+
+<script>
+
+    /** @type {RestClient} */
+    const apiClient = RestClientInstance;
+
+    /** @type {Window} */
+    const leftFrame = window.frames['frame_left'];
+
+    /** @type {Window} */
+    const rightFrame = window.frames['frame_right'];
+
+    function disableInputTemporarily() {
+        // TODO
+    }
+
+    function pp(data) {
+
+        if (typeof data === 'object') {
+            return JSON.stringify(data, null, 2);
+        }
+
+        return data;
+    }
+
+    function registerClicked() {
+
+        const username = document.querySelector('#register_username').value;
+        const password = document.querySelector('#register_password').value;
+
+        const out = document.querySelector('#register_response');
+
+        apiClient.register(username, password).then((res) => {
+            out.innerHTML = pp(res);
+        }).catch((ex) => {
+            out.innerHTML = pp(ex.response.data);
+        });
+    }
+
+    function loginClicked(guestMode) {
+
+        const username = document.querySelector('#login_username').value;
+        const password = document.querySelector('#login_password').value;
+
+        const out = document.querySelector('#login_response');
+
+        if (guestMode) {
+
+            apiClient.loginGuest().then((res) => {
+                out.innerHTML = pp(res);
+            }).catch((ex) => {
+                out.innerHTML = pp(ex.response.data);
+            });
+
+        } else {
+
+            apiClient.login(username, password).then((res) => {
+                out.innerHTML = pp(res);
+            }).catch((ex) => {
+                out.innerHTML = pp(ex.response.data);
+            });
+        }
+    }
+
+    function createRoomClicked() {
+
+        const name = document.querySelector('#room_name').value;
+        const auth = document.querySelector('#rooms_auth').value;
+        const out = document.querySelector('#rooms_response');
+
+        apiClient.setAuthToken(auth);
+
+        apiClient.createRoom(name).then((res) => {
+            out.innerHTML = pp(res);
+        }).catch((ex) => {
+            out.innerHTML = pp(ex.response.data);
+        });
+    }
+
+    function loadEmbeds(roomUid) {
+
+        const base = new URL('/embed.html', document.location);
+        base.searchParams.set('room', roomUid);
+
+        const left = document.querySelector('[name=frame_left]');
+        const right = document.querySelector('[name=frame_right]');
+
+        left.src = base.toString();
+        right.src = base.toString();
+    }
+
+    function loadRoomChat() {
+        const uid = document.querySelector('#embed_room_uid').value;
+        loadEmbeds(uid);
+    }
+
+    function updateAuth() {
+        const token = document.querySelector('#chat_auth').value;
+        localStorage.setItem('chat_token', token);
+    }
+
+    function resetPlayground() {
+
+        if (confirm('This will reset the session state back to when you first visited this page. Confirm')) {
+            localStorage.clear();
+            saveOnClose = false;
+            window.location.reload();
+        }
+    }
+
+    let saveOnClose = true;
+
+    function saveState() {
+
+        document.querySelectorAll('pre').forEach((el) => {
+
+            const id = el.id;
+
+            if (id) {
+                const storageKey = `_pre:${id}`;
+
+                if (localStorage.getItem(storageKey)) {
+                    el.innerHTML = localStorage.getItem(storageKey);
+                }
+
+                window.addEventListener('beforeunload', () => {
+                    if (saveOnClose) {
+                        localStorage.setItem(storageKey, el.innerHTML);
+                    }
+                });
+            }
+
+        });
+
+        document.querySelectorAll('input[type=text]').forEach((el) => {
+
+            const id = el.id;
+
+            if (id) {
+                const storageKey = `_input:${id}`;
+
+                if (localStorage.getItem(storageKey)) {
+                    el.value = localStorage.getItem(storageKey);
+                }
+
+                el.addEventListener('blur', () => {
+                    localStorage.setItem(storageKey, el.value);
+                })
+            }
+        });
+    }
+
+    saveState();
+
+    function onFrameLoad(url) {
+        document.querySelector('#txt_embed_code').value = `<iframe src="${url}"></iframe>`;
+    }
+
+    if (BACKEND_URL) {
+
+        document.querySelectorAll('.hostname').forEach((el) => {
+            el.innerHTML = BACKEND_URL;
+        });
+
+        document.querySelector('#hostname_link').setAttribute('href', BACKEND_URL);
+    }
+
+</script>
+
+</body>
+</html>
