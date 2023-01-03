@@ -4,10 +4,9 @@
     <div class="header">
 
       <div class="text-left p-2">
-        <h1>{{ roomName.length ? roomName : "..." }} <small>{{ roomData ? `(${roomData.uid})` : '' }}</small></h1>
+        <h1>{{ roomName.length ? roomName : "..." }}</h1>
 
         <div v-if="roomDescription" class="mt-3">{{ roomDescription }}</div>
-
       </div>
     </div>
 

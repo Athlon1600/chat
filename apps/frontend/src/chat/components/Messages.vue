@@ -14,9 +14,8 @@
         <div class="flex items-center">
 
           <span class="pr-1 select-none">
-<!--              <img src="https://www.proxynova.com/assets/images/flags/us.png" width="16" height="16">-->
 
-            <img :src="`https://avatars.dicebear.com/api/personas/${message.id}.svg`"
+            <img :src="`https://avatars.dicebear.com/api/personas/${message.user.uid}.svg`"
                  width="20" height="20" alt="">
 
             </span>

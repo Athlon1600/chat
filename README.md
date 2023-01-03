@@ -4,10 +4,10 @@
 ![Top language](https://img.shields.io/github/languages/top/athlon1600/chat)
 ![Lines of code](https://img.shields.io/tokei/lines/github/athlon1600/chat)
 
-Highly customizable chat server/application that can be easily
+Highly customizable chat server/application that is easy to deploy, and can be 
 integrated with any sort of website. 
-Host your own chat server on your own terms.
-  
+Host your own **chat server** on your own terms.
+
 May be used by Twitch streamers who want to host their own chat server
 away from Twitch infrastructure and moderation.
 

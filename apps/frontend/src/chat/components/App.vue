@@ -4,14 +4,13 @@
     <nav id="tab_menu" class="flex p-2 border-b border-gray-800 bg-gray-950">
 
       <a href="#" @click.prevent="clickedTab('messages')">Messages</a>
-      <a href="#" @click.prevent="clickedTab('users')">Users</a>
-      <a href="#" @click.prevent="clickedTab('settings')">Settings</a>
+      <a href="#" @click.prevent="clickedTab('settings')">Rooms</a>
 
       |
 
       <a href="#" @click.prevent="connect">Connect</a>
       <a href="#" @click.prevent="disconnect">Disconnect</a>
-
+      <a href="#" @click.prevent="popOut">Popout</a>
     </nav>
 
     <div v-if="error" class="p-2 bg-red-500 text-white">
@@ -64,6 +63,12 @@ export default defineComponent({
     },
     disconnect() {
       this.$socket.disconnect();
+    },
+    popOut() {
+
+      if (window.self !== window.top) {
+        window.open(window.self.location.toString());
+      }
     }
   },
   mounted() {
@@ -78,7 +83,7 @@ export default defineComponent({
 
     }, {
       immediate: true
-    })
+    });
 
     // this.$store.socketApi.connect();
 
