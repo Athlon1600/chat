@@ -39,7 +39,7 @@ export const messageEntityToEvent = (msg: ChatMessage): ChatMessageInterface => 
     }
 
     temp.user = {
-        uid: "",
+        uid: msg.user?.uid || "",
         displayName: msg.user?.display_name || "",
         countryCode: "",
         picture: "",

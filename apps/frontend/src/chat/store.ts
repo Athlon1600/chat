@@ -53,13 +53,13 @@ const actions = {
             msg.deleted = true;
         })
     },
-    updateUser(user: any) {
+    updateUser(user: UserInterface) {
         if (user) {
 
-            state.messages.forEach((msg: any) => {
+            state.messages.forEach((msg: ChatMessageInterface) => {
 
-                if (msg.user_id === user.uid) {
-                    msg.user_name = user.display_name;
+                if (msg.user && msg.user.uid === user.uid) {
+                    msg.user.displayName = user.displayName;
                 }
 
             });
