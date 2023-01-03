@@ -38,13 +38,11 @@ export class UserRepository extends AbstractRepository<User> {
         const uid = StringUtils.random(10);
         const token = await SecurityUtils.newAccessToken(32);
 
-        // const username = "https://github.com/MaPhil/username-generator";
-
-        const username = "Anonymous_" + RandomUtils.randInt(1, 99999);
+        const displayName = `Guest (${uid})`;
 
         let result = await this.database.query(
             `INSERT INTO users (uid, is_guest, ip_address, display_name, auth_token)
-             VALUES (?, ?, ?, ?, ?)`, [uid, 1, userIp, username, token]
+             VALUES (?, ?, ?, ?, ?)`, [uid, 1, userIp, displayName, token]
         );
 
         const id = result.getInsertId();
@@ -52,15 +50,13 @@ export class UserRepository extends AbstractRepository<User> {
         return id ? this.findById(id) : null;
     }
 
-    async createUser(username: string, password: string): Promise<UserOrNull> {
+    async createUserWithPassword(username: string, password: string): Promise<UserOrNull> {
 
         const uid = StringUtils.random(10);
         const token = await SecurityUtils.newAccessToken(32);
 
         const hashedPassword = await SecurityUtils.passwordHash(password);
-
-        // TODO: random
-        const displayName = 'user_' + RandomUtils.randInt(1000, 999999);
+        const displayName = `${username} (${uid})`;
 
         const result = await this.database.query(
             `INSERT INTO users (created_at, uid, is_guest, username, display_name, password, auth_token)

@@ -205,7 +205,7 @@ export class UserService {
             throw "User with such username already exists!";
         }
 
-        return usersRepo.createUser(username, password);
+        return usersRepo.createUserWithPassword(username, password);
     }
 
     static async findByCredentials(username: string, password: string): Promise<UserOrNull> {
