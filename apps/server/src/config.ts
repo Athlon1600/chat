@@ -1,5 +1,6 @@
 import {PoolConfig} from "mysql";
 import process from "process";
+import {DatabaseConfigParser} from "./DatabaseConfigParser";
 
 // Will not override if any of the values below are set by Docker
 require('dotenv').config({
@@ -12,19 +13,13 @@ interface ServerConfigInterface {
     redis: { host: string; port: number }
 }
 
-const pc: PoolConfig = {
-    host: process.env.DB_HOST || "localhost",
-    user: process.env.DB_USERNAME || "root",
-    password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_DATABASE || "",
-    port: +(process.env.DB_PORT || 3306)
-}
+const dbConfig: PoolConfig = DatabaseConfigParser.fromEnv();
 
 export const Config: ServerConfigInterface = {
     server: {
         port: (process.env.PORT || 3000) as number
     },
-    database: pc,
+    database: dbConfig,
     redis: {
         host: process.env.REDIS_HOST || "127.0.0.1",
         port: (process.env.REDIS_PORT || 6379) as number

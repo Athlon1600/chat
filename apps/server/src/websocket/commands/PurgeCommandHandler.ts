@@ -14,6 +14,8 @@ export const PurgeCommandHandler: CommandHandler = async function (command: Chat
 
         if (await RoomService.canUpdateRoom(user, room.uid)) {
             await RoomService.deleteAllMessagesFromRoom(user, room);
+        } else {
+            session.sendError('You are not allowed to purge messages from this room');
         }
     }
 }

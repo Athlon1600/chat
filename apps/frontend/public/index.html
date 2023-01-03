@@ -410,6 +410,12 @@ POST <span class="hostname"></span>/rooms [name=???]</pre>
         document.querySelector('#hostname_link').setAttribute('href', BACKEND_URL);
     }
 
+    const roomFromStorage = localStorage.getItem("_input:embed_room_uid");
+
+    if (roomFromStorage) {
+        loadEmbeds(roomFromStorage);
+    }
+
 </script>
 
 </body>

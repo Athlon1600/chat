@@ -3,7 +3,6 @@ import {User} from "../models/User";
 import _ from "lodash";
 import {StringUtils} from "../util/StringUtils";
 import {NullablePromise, UserOrNull} from "../types";
-import {RandomUtils} from "../util/RandomUtils";
 import {SecurityUtils} from "../util/SecurityUtils";
 
 export class UserRepository extends AbstractRepository<User> {
@@ -32,17 +31,16 @@ export class UserRepository extends AbstractRepository<User> {
         return result.getRowsAsModels(User);
     }
 
-    // 1 per IP. Automatically deleted after 7 days of inactivity
     async createGuestUser(userIp: string = "", name: string = ""): Promise<UserOrNull> {
 
         const uid = StringUtils.random(10);
         const token = await SecurityUtils.newAccessToken(32);
 
-        const displayName = `Guest (${uid})`;
+        const displayName = name || `Guest (${uid})`;
 
         let result = await this.database.query(
-            `INSERT INTO users (uid, is_guest, ip_address, display_name, auth_token)
-             VALUES (?, ?, ?, ?, ?)`, [uid, 1, userIp, displayName, token]
+            `INSERT INTO users (created_at, uid, is_guest, ip_address, display_name, auth_token)
+             VALUES (UTC_TIMESTAMP(), ?, ?, ?, ?, ?)`, [uid, 1, userIp, displayName, token]
         );
 
         const id = result.getInsertId();
