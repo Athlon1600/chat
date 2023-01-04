@@ -12,10 +12,8 @@ services:
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
-#    expose:
-#      - 3306
     ports:
-      - "127.0.0.1:3306:3306/tcp"
+      - "${DOCKER_MYSQL_PORT_FORWARD:-3308}:3306"
 
   adminer:
     image: adminer

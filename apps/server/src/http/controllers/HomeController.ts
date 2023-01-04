@@ -49,16 +49,14 @@ export class HomeController {
     static async geoip2(req: Request, res: Response) {
 
         const data = req.query as { ip: string };
+        const ipAddress = data.ip || req.ip;
 
-        if (data.ip) {
+        const result = await InternetUtils.getIpLocation(ipAddress);
 
-            const result = await InternetUtils.getIpLocation(data.ip);
-
-            return res.json({
-                data: result
-            })
-        }
-
-        throw new BadRequestException();
+        return res.json({
+            ip: ipAddress,
+            headers: req.headers,
+            data: result
+        });
     }
 }

@@ -9,11 +9,19 @@ services:
     environment:
       - NODE_ENV=production
       - DB_HOST=db
-      # - DB_PASSWORD=
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+    healthcheck:
+      test: "curl localhost:3000/health"
+      interval: "60s"
+      timeout: "3s"
+      start_period: "10s"
+      retries: 3
     expose:
       - 3000
+    ports:
+      - "127.0.0.1:3000:3000"
 
   frontend:
     container_name: "web"
@@ -23,16 +31,8 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=8082
+      - BACKEND_URL=https://api.example.com/
     expose:
       - 8082
-
-  caddy:
-    image: caddy:2.6
-    restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./docker/Caddyfile:/etc/caddy/Caddyfile
-    environment:
-      - DOMAIN=chat-backend.streamplanet.tv
+      - "127.0.0.1:8000:8082"

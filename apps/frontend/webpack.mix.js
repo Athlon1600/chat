@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const dotenv = require("dotenv").config();
 
-const PORT_DEFAULT = process.env.HMR_PORT || 8080;
+const PORT_DEFAULT = process.env.DEV_SERVER_PORT || 8080;
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
 
 // TODO: rewrite as pure webpack
