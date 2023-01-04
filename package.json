@@ -15,7 +15,7 @@
     "clean:all": "concurrently \"npm run clean\" \"npm run clean:packages\" ",
     "docker:services": "docker-compose -f docker-compose.yml up --build -d",
     "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose-dev.yml -p chat_dev up --build -d",
-    "docker:production": "docker-compose --env-file ./docker/.env.docker -f docker-compose.yml -f docker-compose.prod.yml -p chat_prod up --build -d",
+    "docker:production": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml -p chat_prod up --build -d",
     "down": "docker-compose -p chat_dev down --remove-orphans",
     "down:prod": "docker compose -p chat_prod down --remove-orphans",
     "docker:redis:clear": "docker exec -it redis redis-cli flushall",

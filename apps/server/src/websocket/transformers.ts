@@ -41,7 +41,7 @@ export const messageEntityToEvent = (msg: ChatMessage): ChatMessageInterface => 
     temp.user = {
         uid: msg.user?.uid || "",
         displayName: msg.user?.display_name || "",
-        countryCode: "",
+        countryCode: msg.user?.country_code || "",
         picture: "",
         balance: 0,
         roles: []
