@@ -1,0 +1,13 @@
+example.com
+
+handle_path /api/* {
+    reverse_proxy localhost::3000
+}
+
+reverse_proxy localhost:8000
+
+handle_errors {
+    root * /etc/
+    rewrite * /{http.error.status_code}.html
+    file_server
+}
