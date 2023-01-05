@@ -18,7 +18,7 @@ services:
       - DB_PORT=3306
       - DB_USERNAME=root
       - DB_PASSWORD=password
-      - DB_NAME=chat
+      - DB_DATABASE=chat
     ports:
       - '3000:3000'
 
