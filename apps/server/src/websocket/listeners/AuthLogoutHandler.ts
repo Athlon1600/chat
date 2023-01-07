@@ -1,5 +1,6 @@
 import {SocketEventHandler} from "../../types";
 import {SocketSession} from "../SocketSession";
+import {userEntityToUser} from "../transformers";
 
 export const AuthLogoutHandler: SocketEventHandler = async function (connection: SocketSession, payload: any) {
 
@@ -9,7 +10,9 @@ export const AuthLogoutHandler: SocketEventHandler = async function (connection:
     if (user) {
 
         connection.logout().then(() => {
-            connection.socket.emit('auth_updated', {user: null});
+            connection.socket.emit('auth_updated', {
+                user: userEntityToUser(user)
+            });
         });
     }
 }

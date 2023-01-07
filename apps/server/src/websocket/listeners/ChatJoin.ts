@@ -1,12 +1,12 @@
 import {UserRepository} from "../../repositories/UserRepository";
 import {RoomRepository} from "../../repositories/RoomRepository";
-import {RoomResource} from "../../resources/RoomResource";
 import {ChatMessageRepository} from "../../repositories/ChatMessageRepository";
-import {UserResource} from "../../resources/UserResource";
 import {SocketEventHandler} from "../../types";
 import {SocketSession} from "../SocketSession";
-import {messageEntityToEvent} from "../transformers";
+import {messageEntityToEvent, roomEntityToRoom, userEntityToUser} from "../transformers";
 import {JoinEvent} from "@athlon1600/chat-typings";
+import {DateUtils} from "../../util/DateUtils";
+import {User} from "../../models/User";
 
 const channelRepo = new RoomRepository();
 
@@ -28,7 +28,7 @@ export const ChatJoin: SocketEventHandler = async function (connection: SocketSe
         await connection.joinRoom(newRoom);
 
         connection.socket.emit('room_updated', {
-            room: RoomResource.make(newRoom).toArray()
+            room: roomEntityToRoom(newRoom)
         });
 
         const messages = await (new ChatMessageRepository()).findRecentByRoom(newRoom);
@@ -41,12 +41,20 @@ export const ChatJoin: SocketEventHandler = async function (connection: SocketSe
             messages: events
         });
 
+        const roomUsers = await (new UserRepository()).getUsersInRoom(newRoom.id);
+
         connection.socket.emit('room_users', {
-            users: UserResource.collectionAsArray(await (new UserRepository()).getUsersInRoom(newRoom.id))
+            users: roomUsers.map((user: User) => {
+                return userEntityToUser(user);
+            })
         })
 
     } else {
-        connection.socket.emit('error', 'No such room exists!');
+
+        connection.socket.emit('error', {
+            timestamp: DateUtils.timestampInSeconds(),
+            message: 'No such room exists!'
+        });
     }
 
 };

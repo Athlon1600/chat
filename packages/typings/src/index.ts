@@ -80,6 +80,10 @@ export interface RoomMessagesEvent {
     messages: Array<ChatMessageInterface>
 }
 
+export interface RoomUsersEvent {
+    users: Array<UserInterface>
+}
+
 export interface ChatErrorEvent {
     timestamp: number;
     message: string
@@ -112,6 +116,7 @@ interface ServerMessageMap {
     message_deleted: { ids: number }
     room_updated: RoomUpdatedEvent,
     room_messages: RoomMessagesEvent,
+    room_users: RoomUsersEvent,
     room_purged: { deleted: boolean }
     auth_updated: AuthUpdatedEvent,
     user_updated: UserUpdatedEvent

@@ -1,6 +1,6 @@
 import {App, Plugin} from 'vue';
 import store from "./store";
-import {RoomMessagesEvent, RoomUpdatedEvent, UserUpdatedEvent} from "@athlon1600/chat-typings";
+import {RoomMessagesEvent, RoomUpdatedEvent, SystemMessageEvent, UserUpdatedEvent} from "@athlon1600/chat-typings";
 import {RestClient, SocketClient} from "@athlon1600/chat-sdk-js";
 
 interface SocketArgs {
@@ -57,6 +57,15 @@ export const ClientPlugin: Plugin = {
         socketClient.once('error', (data: any) => {
             myStore.state.error = JSON.stringify(data);
         });
+
+        socketClient.once('system', (payload: SystemMessageEvent) => {
+
+            if (payload.type === 'error') {
+                myStore.state.error = payload.text;
+            } else {
+                alert(JSON.stringify(payload, null, 2));
+            }
+        })
 
         socketClient.connect();
 
