@@ -5,6 +5,7 @@ import {GeoIPResponse, Nullable, NullablePromise} from "../types";
 
 export class InternetUtils {
 
+    // https://www.arin.net/resources/registry/whois/rws/api/
     static async getIpLocation(ip: string): NullablePromise<GeoIPResponse> {
 
         const rootDir = path.resolve('./');

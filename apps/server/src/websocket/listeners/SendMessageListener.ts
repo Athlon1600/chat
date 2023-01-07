@@ -48,7 +48,6 @@ export const SendMessageListener: SocketEventHandler = async function (connectio
         return connection.sendError(`You are banned from this channel. Your ban will expire in ${banStatus.getExpiresInHuman()}`);
     }
 
-    const result = await ChatMessageService.insertMessage(user, room, text);
-
-    // ChatMessageService.postMessageOrFail(user, room, text);
+    // will broadcast this new message to everyone automatically
+    await ChatMessageService.insertMessage(user, room, text);
 }

@@ -12,7 +12,7 @@ export class ModeratorRepository extends AbstractRepository<Moderator> {
             `SELECT *
              FROM moderators
              WHERE user_id = ?
-               AND (room_id = ? OR room_id IS NULL)
+               AND room_id = ?
                AND deleted_at IS NULL
              ORDER BY id DESC`, [user.id, room.id]
         );
@@ -20,27 +20,25 @@ export class ModeratorRepository extends AbstractRepository<Moderator> {
         return result.firstRow(Moderator);
     }
 
-    async removeMod(user: User, room?: Room): Promise<boolean> {
-
-        const roomId = room ? room.id : null;
+    async removeMod(user: User, room: Room): Promise<boolean> {
 
         const result = await this.database.query(
             `UPDATE moderators
              SET deleted_at = UTC_TIMESTAMP()
              WHERE user_id = ?
-               AND ((? IS NULL && room_id IS NULL) || (? IS NOT NULL && room_id = ?))
+               AND room_id = ?
                AND deleted_at IS NULL`,
-            [user.id, roomId, roomId, roomId]
+            [user.id, room.id]
         );
 
         return result.success();
     }
 
-    async addMod(user: User, room?: Room): Promise<boolean> {
+    async addMod(user: User, room: Room): Promise<boolean> {
 
         const result = await this.database.query(
             `INSERT INTO moderators (created_at, updated_at, user_id, room_id)
-             VALUES (UTC_TIMESTAMP(), UTC_TIMESTAMP(), ?, ?)`, [user.id, room ? room.id : null]
+             VALUES (UTC_TIMESTAMP(), UTC_TIMESTAMP(), ?, ?)`, [user.id, room.id]
         );
 
         return result.success();

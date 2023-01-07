@@ -2,7 +2,9 @@
 // TODO: admin = has access to /admin,
 // owner = owner of room
 // mod = can moderate this room, super_mod = can mod ALL rooms
-export declare type USER_ROLE = "root" | "admin" | "owner" | "mod" | "super_mod";
+export declare type USER_ROLE = "root" | "admin" | "owner" | "mod" | "super_mod"
+    | "guest" | "user" | "registered" | "verified";
+
 export declare type USER_BADGE = "vip";
 
 // Alternatives: IUserDetails, IUserInfo, IUserInfo, UserSchema, UserDetails

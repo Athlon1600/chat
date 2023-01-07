@@ -28,8 +28,9 @@ export class UserService {
         'owner'
     ];
 
+    // "root" user has all the possible permissions, and can never be banned or deleted by anyone else
     static isRootUser(user: User): boolean {
-        return user.id === 1 || user.username === 'admin' || user.username === 'root';
+        return user.id === 1;
     }
 
     static async getUserRoles(user: User, room: Room): Promise<USER_ROLE[]> {
@@ -37,22 +38,32 @@ export class UserService {
         const roles: USER_ROLE[] = [];
 
         if (this.isRootUser(user)) {
+            roles.push("root");
+        }
+
+        if (user.is_admin) {
             roles.push("admin");
+        }
+
+        if (user.is_super_mod) {
+            roles.push("super_mod");
+        } else {
+
+            const moderator = await ModerationService.getUserRoomModStatus(user, room);
+
+            if (moderator) {
+                roles.push("mod");
+            }
         }
 
         if (room.user_id === user.id) {
             roles.push("owner");
         }
 
-        const moderator = await ModerationService.getUserRoomModStatus(user, room);
-
-        if (moderator) {
-
-            if (moderator.room_id === null) {
-                roles.push("super_mod");
-            } else {
-                roles.push("mod");
-            }
+        if (user.username) {
+            roles.push("registered")
+        } else {
+            roles.push("guest");
         }
 
         return roles;

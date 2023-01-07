@@ -79,6 +79,11 @@ export class ChatMessageService extends AbstractService<ChatMessage, ChatMessage
                 const newMessage = await messageRepo.find(newId);
 
                 if (newMessage) {
+
+                    if (newMessage.user) {
+                        newMessage.user.roles = await UserService.getUserRoles(sender, room);
+                    }
+
                     SocketEventBroadcaster.emitNewMessage(newMessage, room);
                 }
             }
