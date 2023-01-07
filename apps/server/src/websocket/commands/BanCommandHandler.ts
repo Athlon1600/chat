@@ -17,7 +17,7 @@ export const BanCommandHandler: CommandHandler = async function (command: ChatCo
     const room = await session.getCurrentRoom();
 
     if (!(user && room)) {
-        return session.sendError('Invalid user and/or room');
+        return session.sendError('You are not logged in or in any room');
     }
 
     const canBan = await BanService.canUserBanPeopleInRoom(user, room);

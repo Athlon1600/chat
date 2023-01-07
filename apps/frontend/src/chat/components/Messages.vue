@@ -13,7 +13,7 @@
 
         <div class="flex items-center">
 
-          <span class="pr-1 select-none">
+          <span v-if="message.user" class="pr-1 select-none">
 
             <img :src="`https://avatars.dicebear.com/api/personas/${message.user.uid}.svg`"
                  width="20" height="20" alt="">

@@ -6,11 +6,12 @@ import {User} from "../models/User";
 import {SessionService} from "../services/SessionService";
 import {SocketEventBroadcaster} from "../SocketEventBroadcaster";
 import {UserService} from "../services/UserService";
+import {ServerToClientEvents, ClientToServerEvents} from "@athlon1600/chat-typings";
 
 export class SocketSession {
 
     // The underlying socket. SHOULD NEVER HAVE TO USE DIRECTLY!
-    public readonly socket: Socket;
+    public readonly socket: Socket<ClientToServerEvents, ServerToClientEvents>;
 
     // Disconnect if not authenticated within 30 seconds
     // protected disconnectTimer: NodeJS.Timer;
@@ -107,19 +108,18 @@ export class SocketSession {
         return false;
     }
 
-    sendServerMessage(data: string) {
+    sendServerMessage(text: string) {
 
-        this.socket.emit('server_message', {
-            timestamp: Date.now(),
-            type: "server",
-            text: data
+        this.socket.emit('system', {
+            type: 'info',
+            text: text
         });
     }
 
     sendError(err: string): void {
 
-        this.socket.emit('error', {
-            timestamp: Date.now(),
+        this.socket.emit('system', {
+            type: 'error',
             text: err
         });
     }

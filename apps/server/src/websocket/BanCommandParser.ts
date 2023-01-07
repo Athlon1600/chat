@@ -11,6 +11,7 @@ interface BanCommandStruct {
 }
 
 // !ban {user} {duration} {reason}
+// if user contains spaces, "it needs to be quoted"
 export const BanCommandParser = (command: ChatCommand): BanCommandStruct => {
 
     const parts = ArrayUtils.shrinkAndCombineArrayOfStrings(command.argumentArray, 3);

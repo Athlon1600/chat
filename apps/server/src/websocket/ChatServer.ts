@@ -11,6 +11,7 @@ import {SocketEventHandler} from "../types";
 export class ChatServer {
 
     private readonly httpServer: http.Server;
+    // TODO: <listenEvents, emitEvents>
     private readonly socketServer: Server;
 
     // TODO: need logger

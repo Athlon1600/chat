@@ -24,6 +24,19 @@ export interface RoomInterface {
     slowMode: number
 }
 
+type SystemMessageType = "info" | "warning" | "success" | "error";
+
+/**
+ * Messages that are sent by the SYSTEM rather by a user
+ * Can be broadcast to individual user, multiple users, everyone in room, or just EVERYONE connected anywhere
+ * They are NOT saved in the database, and are typically not displayed as part of regular room conversation
+ */
+export interface SystemMessageEvent {
+    type: SystemMessageType,
+    meta?: { [key: string]: string },
+    text: string
+}
+
 export interface ChatMessageInterface {
     id: number;
     timestamp: number;
@@ -67,12 +80,7 @@ export interface RoomMessagesEvent {
     messages: Array<ChatMessageInterface>
 }
 
-
-interface ChatConnectionEvent {
-    type?: string
-}
-
-export interface ChatErrorEvent extends ChatConnectionEvent {
+export interface ChatErrorEvent {
     timestamp: number;
     message: string
 }
@@ -107,7 +115,8 @@ interface ServerMessageMap {
     room_purged: { deleted: boolean }
     auth_updated: AuthUpdatedEvent,
     user_updated: UserUpdatedEvent
-    error: ChatErrorEvent
+    error: ChatErrorEvent,
+    system: SystemMessageEvent
 }
 
 // messages that client will send to server

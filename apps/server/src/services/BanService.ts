@@ -33,8 +33,10 @@ export class BanService {
     }
 
     static async canUserBanPeopleInRoom(admin: User, room: Room): Promise<boolean> {
+        // TODO:
+        // return admin.roles.includes('admin', 'root');
         const isMod = await ModerationService.isModeratorOfRoom(admin, room);
-        return (UserService.isRootUser(admin) || isMod);
+        return isMod || UserService.isRootUser(admin);
     }
 
     static async banUser(admin: User, user: User, room: Room, duration: number, reason: string = ""): Promise<boolean> {
