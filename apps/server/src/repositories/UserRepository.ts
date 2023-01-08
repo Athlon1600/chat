@@ -4,6 +4,8 @@ import _ from "lodash";
 import {StringUtils} from "../util/StringUtils";
 import {NullablePromise, UserOrNull} from "../types";
 import {SecurityUtils} from "../util/SecurityUtils";
+import {Room} from "../models/Room";
+import {ChatMessageRepository} from "./ChatMessageRepository";
 
 export class UserRepository extends AbstractRepository<User> {
 
@@ -142,7 +144,7 @@ export class UserRepository extends AbstractRepository<User> {
     async findManyById(ids: Array<number>): Promise<Array<User>> {
 
         if (!ids.length) {
-            return Promise.resolve([]);
+            return [];
         }
 
         let result = await this.database.query('SELECT * FROM users WHERE id IN (?)', [ids]);

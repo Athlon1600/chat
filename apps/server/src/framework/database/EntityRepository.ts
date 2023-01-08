@@ -12,25 +12,15 @@ export interface FindOptions {
     orderByDirection?: "asc" | "desc";
 }
 
-/**
- *
- *     deleteMany()
- *     deleteOne()
- *     find()
- *     findOne()
- *     findOneAndDelete()
- *     findOneAndUpdate()
- *     replaceOne()
- *     updateOne()
- *     updateMany()
- */
 export interface EntityRepository<T extends EntityModel> {
 
-    // FindOneOptions
-    find(id: number, relations?: any[]): Promise<T | null>;
-
+    // findOneBy()
     // findOrFail(id: number): Promise<T>;
     // firstWhere(column: string, value: IdValue): Promise<T | null>;
+    find(id: number, relations?: any[]): Promise<T | null>;
+
+    // findBy()
+    // findAll()
     findMany(options: FindOptions): Promise<T[]>;
 
     // store(entity :T) : void --- auto fills new id inside entity.id

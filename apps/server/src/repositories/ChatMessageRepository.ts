@@ -3,14 +3,13 @@ import {ChatMessage} from "../models/ChatMessage";
 import {Room} from "../models/Room";
 import {NullablePromise} from "../types";
 import {UserRepository} from "./UserRepository";
-import {ArrayUtils} from "../framework/util/ArrayUtils";
 import {EntityRepository, FindOptions} from "../framework/database/EntityRepository";
-import {User} from "../models/User";
+import {ArrayUtils} from "../framework/util/ArrayUtils";
 import {UserService} from "../services/UserService";
 
-const users = new UserRepository();
-
 declare type MESSAGE_RELATIONS = "user" | "room";
+
+const users = new UserRepository();
 
 export class ChatMessageRepository extends AbstractRepository<ChatMessage> implements EntityRepository<ChatMessage> {
 
@@ -31,49 +30,39 @@ export class ChatMessageRepository extends AbstractRepository<ChatMessage> imple
         return result.getRowsAsModels(ChatMessage);
     }
 
-    protected async loadUserRelations(rows: ChatMessage[], room?: Room): Promise<ChatMessage[]> {
+    protected async loadUsersWithRoles(rows: ChatMessage[], roomContext?: Room): Promise<void> {
 
         const userIds = rows.map((message: ChatMessage) => message.user_id);
 
         const temp = await users.findManyById(userIds);
 
-        temp.forEach((user: User) => {
-
-            if (UserService.isRootUser(user)) {
-                user.roles.push("root");
-            }
-
-            if (room && room.user_id === user.id) {
-                user.roles.push("owner");
-            }
-
-        });
+        if (roomContext) {
+            await UserService.loadRolesFor(temp, roomContext);
+        }
 
         const usersById = ArrayUtils.keyBy(temp, "id");
 
         rows.forEach((msg: ChatMessage) => {
             msg.user = usersById.get(msg.user_id.toString());
         });
-
-        return rows;
     }
 
     async findRecentByRoom(room: Room, limit: number = 20): Promise<ChatMessage[]> {
 
-        let messages = await this.database.query(
+        let result = await this.database.query(
             `SELECT *
              FROM chat_messages
              WHERE room_id = ?
                AND deleted_at IS NULL
              ORDER BY id DESC
-             LIMIT 20`, [room.id]
+             LIMIT ?`, [room.id, limit]
         );
 
-        let models = messages.getRowsAsModels(ChatMessage);
-        await this.loadUserRelations(models, room);
+        const messages = result.getRowsAsModels(ChatMessage);
+        await this.loadUsersWithRoles(messages, room);
 
         // in ascending order
-        return models.reverse();
+        return messages.reverse();
     }
 
     // TODO: who deleted it?

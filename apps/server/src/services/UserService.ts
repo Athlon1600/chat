@@ -33,40 +33,43 @@ export class UserService {
         return user.id === 1;
     }
 
-    static async getUserRoles(user: User, room: Room): Promise<USER_ROLE[]> {
+    static async loadRolesFor(users: User[], roomContext: Room): Promise<void> {
 
-        const roles: USER_ROLE[] = [];
+        for (const user of users) {
 
-        if (this.isRootUser(user)) {
-            roles.push("root");
-        }
+            const roles: USER_ROLE[] = [];
 
-        if (user.is_admin) {
-            roles.push("admin");
-        }
-
-        if (user.is_super_mod) {
-            roles.push("super_mod");
-        } else {
-
-            const moderator = await ModerationService.getUserRoomModStatus(user, room);
-
-            if (moderator) {
-                roles.push("mod");
+            if (this.isRootUser(user)) {
+                roles.push("root");
             }
-        }
 
-        if (room.user_id === user.id) {
-            roles.push("owner");
-        }
+            if (user.is_admin) {
+                roles.push("admin");
+            }
 
-        if (user.username) {
-            roles.push("registered")
-        } else {
-            roles.push("guest");
-        }
+            if (user.is_super_mod) {
+                roles.push("super_mod");
+            } else {
 
-        return roles;
+                const moderator = await ModerationService.getUserRoomModStatus(user, roomContext);
+
+                if (moderator) {
+                    roles.push("mod");
+                }
+            }
+
+            if (roomContext.user_id === user.id) {
+                roles.push("owner");
+            }
+
+            if (user.username) {
+                roles.push("registered")
+            } else {
+                roles.push("guest");
+            }
+
+            user.roles = roles;
+        }
     }
 
     static canModifyUser(who: User, target: User): boolean {

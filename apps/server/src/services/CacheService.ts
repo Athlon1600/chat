@@ -6,18 +6,28 @@ import {RoomRepository} from "../repositories/RoomRepository";
 import {Room} from "../models/Room";
 import {StringUtils} from "../util/StringUtils";
 import {DateUtils} from "../util/DateUtils";
+import {UserService} from "./UserService";
 
 export class CacheService {
 
-    // TODO: cache raw queries themselves
-    static async getUserByUid(uid: string): Promise<UserOrNull> {
+    static async getUserByUid(uid: string, roomContext?: Room): Promise<UserOrNull> {
 
-        const cacheKey = `users:${uid}`;
+        const cacheKey = `users:${uid}`; // TODO: :roomContext.id
 
         return RedisManager.getObjectOrSet<Nullable<User>>(cacheKey, async () => {
 
-            const userFromDatabase = await (new UserRepository()).findByUid(uid);
-            return userFromDatabase ? userFromDatabase : null;
+            const userEntity = await (new UserRepository()).findByUid(uid);
+
+            if (userEntity) {
+
+                if (roomContext) {
+                    userEntity.roles = await UserService.loadRolesFor(userEntity, roomContext);
+                }
+
+                return userEntity;
+            }
+
+            return null;
         });
     }
 
@@ -53,5 +63,13 @@ export class CacheService {
         const result = await RedisManager.getClientInstance().get(cacheKey);
 
         return result ? StringUtils.parseIntOrDefault(result) : null;
+    }
+
+    static async getRoomModerators(room: number) {
+        return null;
+    }
+
+    static async revokeModeratorCache() {
+
     }
 }

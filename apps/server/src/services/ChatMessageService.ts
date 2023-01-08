@@ -81,7 +81,7 @@ export class ChatMessageService extends AbstractService<ChatMessage, ChatMessage
                 if (newMessage) {
 
                     if (newMessage.user) {
-                        newMessage.user.roles = await UserService.getUserRoles(sender, room);
+                        await UserService.loadRolesFor([newMessage.user], room);
                     }
 
                     SocketEventBroadcaster.emitNewMessage(newMessage, room);
