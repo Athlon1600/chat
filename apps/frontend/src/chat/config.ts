@@ -1,4 +1,14 @@
-const backendEndpoint: string = process.env.BACKEND_URL || 'http://localhost:3000';
+const defaultEndpointUrl: string = (function () {
+
+    if (typeof window !== 'undefined') {
+        return window.location.protocol + '//' + window.location.hostname + ':3000';
+    }
+
+    return 'http://localhost:3000'
+
+})();
+
+const backendEndpoint: string = process.env.BACKEND_URL || defaultEndpointUrl;
 
 export const CONFIG_BACKEND_URL = backendEndpoint;
 
