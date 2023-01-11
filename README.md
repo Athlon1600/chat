@@ -4,8 +4,7 @@
 ![Top language](https://img.shields.io/github/languages/top/athlon1600/chat)
 ![Lines of code](https://img.shields.io/tokei/lines/github/athlon1600/chat)
 
-Highly customizable chat server/application that is easy to deploy, and can be 
-integrated with any sort of website. 
+Highly customizable chat server/application that is easy to deploy, and can be integrated with any sort of website.
 Host your own **chat server** on your own terms.
 
 May be used by Twitch streamers who want to host their own chat server
@@ -41,6 +40,9 @@ This project is still in its beta stage. Nothing is guaranteed until v1.0.0.
 Entire application is **self-contained** within this single repository
 which has many advantages during development.
 
+- `/apps` folder contains "launchable" apps
+- `/packages` folder contains "shared" code used by apps and by other packages too.
+
 ## :whale2: Local Development using Docker
 
 Two things you need installed first:
@@ -66,6 +68,18 @@ on your local computer:
 - localhost:3309 = mySQL database
 - localhost:6379 = Redis
 
+## :rocket: One-click install
+
+Rent a server from Linode or such (preferably of Ubuntu variety),
+and paste the following command into your terminal:
+
+```
+curl -s https://raw.githubusercontent.com/Athlon1600/chat/master/scripts/install.sh | bash
+```
+
+Everything will be installed all at once without needing any further input from you.  
+
+If install was a success, you can then access the application via the IP address that was assigned to your server. See the demo links above of what that would look like.
 
 ## :construction: To-do list
 
