@@ -6,7 +6,6 @@ import {RoomRepository} from "../repositories/RoomRepository";
 import {Room} from "../models/Room";
 import {StringUtils} from "../util/StringUtils";
 import {DateUtils} from "../util/DateUtils";
-import {UserService} from "./UserService";
 
 export class CacheService {
 
@@ -21,7 +20,7 @@ export class CacheService {
             if (userEntity) {
 
                 if (roomContext) {
-                    userEntity.roles = await UserService.loadRolesFor(userEntity, roomContext);
+                    // await UserService.loadRolesFor([userEntity], roomContext);
                 }
 
                 return userEntity;
