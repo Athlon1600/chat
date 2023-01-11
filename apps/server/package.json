@@ -40,6 +40,7 @@
     "npm": "^7.6.3",
     "redis": "^4.5.1",
     "socket.io": "^4.5.4",
+    "socket.io-adapter": "^2.4.0",
     "uuid": "^8.3.2",
     "winston": "^3.3.3"
   },
