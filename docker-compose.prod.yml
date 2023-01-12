@@ -9,7 +9,8 @@ services:
     environment:
       - NODE_ENV=production
       - DB_HOST=db
-      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - DB_DATABASE=chat
+      - DB_PASSWORD=${MYSQL_ROOT_PASSWORD:-password}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     healthcheck:
@@ -21,18 +22,18 @@ services:
     expose:
       - 3000
     ports:
-      - "127.0.0.1:3000:3000"
+      - "${BACKEND_PORT_FORWARD:-3000}:3000"
 
   frontend:
     container_name: "web"
     build:
       context: .
-      dockerfile: ./apps/frontend/Dockerfile-dev
+      dockerfile: ./apps/frontend/Dockerfile
     environment:
       - NODE_ENV=production
-      - PORT=8082
+      - PORT=8080
       - BACKEND_URL=https://api.example.com/
     expose:
-      - 8082
+      - 8080
     ports:
-      - "127.0.0.1:8000:8082"
+      - "${WEB_PORT_FORWARD:-8080}:8080"
