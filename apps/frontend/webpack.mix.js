@@ -33,7 +33,7 @@ if (mix.inProduction()) {
 }
 
 mix.ts('src/sdk.ts', 'dist/assets/sdk.js').version();
-mix.ts('src/chat', 'dist/assets/embed.js').vue().options({
+mix.ts('src/embed', 'dist/assets/embed.js').vue().options({
     processCssUrls: false,
     postCss: [tailwindcss('./tailwind.config.js')],
 });

@@ -3,6 +3,10 @@
 
     <h1>Here go settings</h1>
 
+    <pre>
+      !mod {name} - make someone a moderator of current room. Only admins or above can make people mods.
+    </pre>
+
     <h3>Join a room</h3>
 
     <p>New UID of a room you want to join</p>

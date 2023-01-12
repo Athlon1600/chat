@@ -7,6 +7,9 @@
         <h1>{{ roomName.length ? roomName : "..." }}</h1>
 
         <div v-if="roomDescription" class="mt-3">{{ roomDescription }}</div>
+
+        {{ currentUser }}
+
       </div>
     </div>
 

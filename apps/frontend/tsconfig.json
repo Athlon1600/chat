@@ -11,6 +11,6 @@
   ],
   "files": [
     "src/shims-vue.d.ts",
-    "src/chat/global.d.ts"
+    "src/embed/global.d.ts"
   ]
 }

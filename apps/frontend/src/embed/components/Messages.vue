@@ -27,6 +27,8 @@
 
           <span v-else>***</span>
 
+          <span>{{ JSON.stringify(message.user.roles) }}</span>
+
           <span class="text-white mr-2">:</span>
 
           <span v-if="!message.deleted" class="text-primary">{{ message.message }}</span>
