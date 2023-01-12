@@ -1,6 +1,16 @@
 import {RestClient} from "@athlon1600/chat-sdk-js";
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3000';
+const defaultEndpointUrl: string = (function () {
+
+    if (typeof window !== 'undefined') {
+        return window.location.protocol + '//' + window.location.hostname + ':3000';
+    }
+
+    return 'http://localhost:3000'
+
+})();
+
+const BACKEND_URL = process.env.BACKEND_URL || defaultEndpointUrl;
 
 if (typeof window === 'object') {
 
