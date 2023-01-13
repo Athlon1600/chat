@@ -40,7 +40,7 @@ This project is still in its beta stage. Nothing is guaranteed until v1.0.0.
 Entire application is **self-contained** within this single repository
 which has many advantages during development.
 
-- `/apps` folder contains "launchable" apps
+- `/apps` folder contains "launchable" apps that can be started by calling `npm run start` within that application's directory. Neither application can depend on another. Apps can only depend on `packages`.
 - `/packages` folder contains "shared" code used by apps and by other packages too.
 
 ## :whale2: Local Development using Docker
@@ -65,8 +65,7 @@ on your local computer:
 - localhost:8080 = frontend
 - localhost:3000 = server/backend
 - localhost:9000 = adminer (for browsing/editing db contents)
-- localhost:3309 = mySQL database
-- localhost:6379 = Redis
+- localhost:8001 = Redis Insight
 
 ## :rocket: One-click install
 
