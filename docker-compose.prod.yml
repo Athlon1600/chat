@@ -32,7 +32,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=8080
-      - BACKEND_URL=https://api.example.com/
+      #- BACKEND_URL=https://api.example.com/
     expose:
       - 8080
     ports:

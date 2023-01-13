@@ -23,7 +23,7 @@ COPY . .
 # generate /dist for each workspace
 RUN npm run build:packages
 
-EXPOSE 8082
+EXPOSE 8080
 
 CMD npm run serve --workspace frontend
 # CMD sleep 99999

@@ -5,16 +5,18 @@ RUN npm install -g http-server
 
 WORKDIR /app
 
+COPY package.json ./
+COPY apps/frontend/package.json apps/frontend/package.json
+COPY apps/server/package.json apps/server/package.json
+COPY packages ./packages
+RUN npm install
+
 # copy everything
 COPY . .
 
-USER root
-
-RUN npm install
-
 RUN npm run build:packages
-RUN npm run build --workspace frontend
 
 EXPOSE 8080
 
-CMD [ "http-server", "apps/frontend/dist", "-p 8080" ]
+# environment variables not available until this step
+CMD ["/bin/sh", "-c", "npm run build && http-server apps/frontend/dist -p 8080"]
