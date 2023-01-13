@@ -77,9 +77,28 @@ and paste the following command into your terminal:
 curl -s https://raw.githubusercontent.com/Athlon1600/chat/master/scripts/install.sh | bash
 ```
 
-Everything will be installed all at once without needing any further input from you.  
+Everything will be installed all at once without needing any further input from you.
 
-If install was a success, you can then access the application via the IP address that was assigned to your server. See the demo links above of what that would look like.
+If install was a success, you can then access the application via the IP address that was assigned to your server. See
+the demo links above of what that would look like.
+
+### Caddy Server
+
+One-click install:
+
+```shell
+curl -sS https://raw.githubusercontent.com/Athlon1600/chat/master/scripts/caddy.sh | sh
+```
+
+Once Caddy is installed, you need to modify these files:
+
+- `.env.production` - rename to `.env` and change values inside
+- `docker-compose-prod.yml` - adjust values there accordingly too
+- `etc/Caddyfile`
+
+```shell
+caddy run --config ./etc/Caddyfile
+```
 
 ## :construction: To-do list
 
