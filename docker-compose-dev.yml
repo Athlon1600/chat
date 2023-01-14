@@ -5,7 +5,8 @@ services:
     container_name: "backend"
     build:
       context: .
-      dockerfile: ./apps/server/Dockerfile-dev
+      dockerfile: ./apps/server/Dockerfile
+      target: dev
     volumes:
       - ./apps/server/src:/app/apps/server/src
     environment:

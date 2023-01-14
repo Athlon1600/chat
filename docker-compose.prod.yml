@@ -5,7 +5,8 @@ services:
     container_name: "backend"
     build:
       context: .
-      dockerfile: ./apps/server/Dockerfile-dev
+      dockerfile: ./apps/server/Dockerfile
+      target: prod
     environment:
       - NODE_ENV=production
       - DB_HOST=db
