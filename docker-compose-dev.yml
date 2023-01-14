@@ -27,7 +27,8 @@ services:
     container_name: "web"
     build:
       context: .
-      dockerfile: ./apps/frontend/Dockerfile-dev
+      dockerfile: ./apps/frontend/Dockerfile
+      target: dev
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true

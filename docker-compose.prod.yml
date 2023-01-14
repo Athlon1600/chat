@@ -30,6 +30,7 @@ services:
     build:
       context: .
       dockerfile: ./apps/frontend/Dockerfile
+      target: prod
     environment:
       - NODE_ENV=production
       - PORT=8080
