@@ -7,4 +7,4 @@ curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash - &&\
 sudo apt-get install -y nodejs &&\
 git clone https://github.com/Athlon1600/chat.git &&\
 cd chat &&\
-npm run docker:dev
+npm run docker:production
