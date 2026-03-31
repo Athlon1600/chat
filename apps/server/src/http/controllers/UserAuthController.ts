@@ -75,6 +75,7 @@ export class UserAuthController {
 
         } else if (guest) {
 
+            // @ts-ignore
             const guestUser = await UserService.findOrCreateByIp(req.ip);
 
             if (guestUser) {
@@ -82,6 +83,7 @@ export class UserAuthController {
                 const ip = req.ip;
 
                 // update country
+                // @ts-ignore
                 const location = await UserService.updateLastConnectionInfo(guestUser, ip);
                 guestUser.country_code = location?.countryCode || "";
 

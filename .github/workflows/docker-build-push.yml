@@ -20,8 +20,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker image for the frontend
-        run: docker build --file apps/frontend/Dockerfile --tag athlon1600/chat-frontend:latest .
+      - name: Build Docker images
+        run: |
+          docker build --file apps/frontend/Dockerfile --target prod --tag athlon1600/chat-frontend:latest .
+          docker build --file apps/server/Dockerfile --target prod --tag athlon1600/chat-api:latest .
 
-      - name: Push Docker image
-        run: docker push athlon1600/chat-frontend:latest
+      - name: Push Docker images
+        run: | 
+          docker push athlon1600/chat-frontend:latest
+          docker push athlon1600/chat-api:latest

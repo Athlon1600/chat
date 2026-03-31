@@ -51,6 +51,7 @@ export class HomeController {
         const data = req.query as { ip: string };
         const ipAddress = data.ip || req.ip;
 
+        // @ts-ignore
         const result = await InternetUtils.getIpLocation(ipAddress);
 
         return res.json({

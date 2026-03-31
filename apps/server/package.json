@@ -8,11 +8,8 @@
     "build": "tsc",
     "clean": "rimraf ./node_modules ./dist",
     "watch": "tsc -w",
-    "nodemon": "nodemon dist/index",
-    "serve": "npm run nodemon",
-    "seed": "",
-    "seed:db": "",
-    "start:dev": "npm run serve",
+    "serve": "nodemon ./dist --watch src --ext ts,js",
+    "start": "node ./dist",
     "dev": "concurrently -k \"npm run watch\" \"npm run serve\""
   },
   "author": "",
