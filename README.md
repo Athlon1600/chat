@@ -2,6 +2,7 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/athlon1600/chat)
 ![Top language](https://img.shields.io/github/languages/top/athlon1600/chat)
+[![Docker build and push workflow](https://github.com/Athlon1600/chat/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/Athlon1600/chat/actions/workflows/docker-build-push.yml)
 
 Highly customizable chat server/application that is easy to deploy, and can be integrated with any sort of website.
 Host your own **chat server** on your own terms.
@@ -54,7 +55,7 @@ Now run these commands:
 ```shell
 git clone https://github.com/Athlon1600/chat
 cd chat
-npm run docker:dev
+docker compose up --build -d
 ```
 
 This will take a while, but once up and running
@@ -63,8 +64,6 @@ on your local computer:
 
 - localhost:8080 = frontend
 - localhost:3000 = server/backend
-- localhost:9000 = adminer (for browsing/editing db contents)
-- localhost:8001 = Redis Insight
 
 ## :rocket: One-click install
 

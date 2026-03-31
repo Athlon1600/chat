@@ -24,10 +24,11 @@ services:
 
   frontend:
     container_name: "web"
-    build:
-      context: .
-      dockerfile: ./apps/frontend/Dockerfile
-      target: prod
+    image: athlon1600/chat-frontend:latest
+#    build:
+#      context: .
+#      dockerfile: ./apps/frontend/Dockerfile
+#      target: prod
     environment:
       - NODE_ENV=production
       #- BACKEND_URL=https://chat.proxynova.net/
