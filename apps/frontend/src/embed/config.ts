@@ -10,8 +10,6 @@ const defaultEndpointUrl: string = (function () {
 
 const backendEndpoint: string = process.env.BACKEND_URL || defaultEndpointUrl;
 
-export const CONFIG_BACKEND_URL = backendEndpoint;
-
 // the purpose here is to provide sensible defaults in case nothing useful is inside .env
 const config = {
     APP_URL: process.env.APP_URL || "",

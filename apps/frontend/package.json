@@ -11,10 +11,8 @@
     "production": "mix --production",
     "build": "npm run production",
     "clean": "rimraf ./dist ./node_modules",
-    "serve": "npm run hot",
-    "deploy": "",
-    "netlify": "npm run production && netlify deploy --dir=dist",
-    "vercel": ""
+    "serve": "http-server ./dist -p 8000",
+    "deploy:netlify": "npm run production && netlify deploy --dir=dist"
   },
   "keywords": [],
   "author": "Athlon1600",
@@ -39,6 +37,7 @@
     "bootstrap": "^5.2.2",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
+    "http-server": "^14.1.1",
     "vue": "^3.2.37"
   }
 }
