@@ -2,7 +2,6 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/athlon1600/chat)
 ![Top language](https://img.shields.io/github/languages/top/athlon1600/chat)
-![Lines of code](https://img.shields.io/tokei/lines/github/athlon1600/chat)
 
 Highly customizable chat server/application that is easy to deploy, and can be integrated with any sort of website.
 Host your own **chat server** on your own terms.
