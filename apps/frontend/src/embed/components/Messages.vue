@@ -15,7 +15,7 @@
 
           <span v-if="message.user" class="pr-1 select-none">
 
-            <img :src="`https://avatars.dicebear.com/api/personas/${message.user.uid}.svg`"
+            <img :src="`https://api.dicebear.com/9.x/initials/svg?seed=${message.user.uid}`"
                  width="20" height="20" alt="">
 
             </span>

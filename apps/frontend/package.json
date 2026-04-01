@@ -8,6 +8,7 @@
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "mix": "mix",
     "hot": "mix watch --hot",
+    "dev": "npm run hot",
     "production": "mix --production",
     "build": "npm run production",
     "clean": "rimraf ./dist ./node_modules",
